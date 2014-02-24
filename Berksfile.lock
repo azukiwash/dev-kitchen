@@ -1,0 +1,40 @@
+{
+  "sources": {
+    "yum": {
+      "locked_version": "3.1.0"
+    },
+    "apt": {
+      "locked_version": "2.3.8"
+    },
+    "dmg": {
+      "locked_version": "2.1.4"
+    },
+    "homebrew": {
+      "locked_version": "1.5.4"
+    },
+    "git": {
+      "locked_version": "2.9.0"
+    },
+    "zsh": {
+      "locked_version": "1.0.0"
+    },
+    "java": {
+      "locked_version": "1.19.2"
+    },
+    "build-essential": {
+      "locked_version": "1.4.2"
+    },
+    "windows": {
+      "locked_version": "1.30.0"
+    },
+    "chef_handler": {
+      "locked_version": "1.1.4"
+    },
+    "runit": {
+      "locked_version": "1.5.8"
+    },
+    "yum-epel": {
+      "locked_version": "0.3.4"
+    }
+  }
+}
