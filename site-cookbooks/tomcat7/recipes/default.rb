@@ -2,19 +2,16 @@
 # Cookbook Name:: tomcat7
 # Recipe:: default
 #
-include_recipe 'java'
+include_recipe "java"
 
 tomcatVer      = node["tomcat7"]["version"]
 tomcatBasename = node["tomcat7"]["basename"]
 tomcatUrl      = node["tomcat7"]["url"]
 tomcatArc      = node["tomcat7"]["archive"]
-
-tomcatTarget = node["tomcat7"]["target"]
-tomcatUser   = node["tomcat7"]["user"]
-tomcatGroup  = node["tomcat7"]["group"]
-
-tomcatHome   = node["tomcat7"]["home"]
-
+tomcatTarget   = node["tomcat7"]["target"]
+tomcatUser     = node["tomcat7"]["user"]
+tomcatGroup    = node["tomcat7"]["group"]
+tomcatHome     = node["tomcat7"]["home"]
 
 remote_file "/tmp/#{tomcatArc}" do
   source "#{tomcatUrl}/#{tomcatArc}"
@@ -28,11 +25,12 @@ end
 
 user "#{tomcatUser}" do
   comment "Tomcat user"
-  gid "#{tomcatGroup}"
+  group "#{tomcatGroup}"
   home "#{tomcatHome}"
   shell "/bin/false"
+  password nil
   system true
-  action :create
+  action [:create, :manage]
 end
 
 directory "#{tomcatTarget}/#{tomcatBasename}" do
@@ -43,6 +41,7 @@ directory "#{tomcatTarget}/#{tomcatBasename}" do
 end
 
 execute "tar" do
+  not_if { File.exist? "#{tomcatTarget}/#{tomcatArc}" }
   user "#{tomcatUser}"
   group "#{tomcatGroup}"
   installation_dir = "#{tomcatTarget}"
@@ -77,8 +76,9 @@ script 'make and install jsvc' do
     make
     cp jsvc ../..
     cd ../..
-    EOH
-  not_if {File.exists?("#{tomcatHome}/bin/jsvc")}
+    rm -rf commons-daemon-#{node['tomcat7']['jsvcversion']}-native-src
+  EOH
+  creates "#{tomcatHome}/bin/jsvc"
 end
 
 template "/etc/init.d/tomcat" do
@@ -88,19 +88,8 @@ template "/etc/init.d/tomcat" do
   mode "0755"
 end
 
-execute "daemon" do
-  user "root"
-  group "root"
-  case node["platform"]
-  when "debian","ubuntu"
-    command "update-rc.d tomcat defaults"
-  else
-    command "chkconfig --add tomcat"
-  end
-  action :run
-end
-
 service "tomcat" do
   service_name "tomcat"
-  action :start
+  supports :start => true, :stop => true, :restart => true
+  action [:enable, :restart]
 end
