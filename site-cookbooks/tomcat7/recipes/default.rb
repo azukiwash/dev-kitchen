@@ -82,7 +82,7 @@ script 'make and install jsvc' do
 end
 
 template "/etc/init.d/tomcat" do
-  source "daemon.sh.erb"
+  source "daemon_warp.sh.erb"
   owner "root"
   group "root"
   mode "0755"

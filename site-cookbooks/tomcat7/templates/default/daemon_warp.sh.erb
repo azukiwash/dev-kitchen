@@ -1,0 +1,77 @@
+#!/bin/sh
+
+# description: Start Tomcat daemon
+# processname: tomcat
+# chkconfig: 2345 80 20
+
+### BEGIN INIT INFO
+# Provides:        tomcat
+# Default-Start:   2 3 4 5
+# Default-Stop:
+# Short-Description: Start Tomcat daemon
+### END INIT INFO
+
+RETVAL=0
+
+# export JAVA_HOME
+. /etc/profile.d/jdk.sh
+CATALINA_HOME=<%= node[:tomcat7][:home] %>
+TOMCAT_USER=<%= node[:tomcat7][:user] %>
+DAEMON=$CATALINA_HOME/bin/daemon.sh
+LOCKFILE="$CATALINA_HOME/logs/catalina-daemon.lock"
+
+start() {
+        echo -n "Starting tomcat: "
+        # need at least 1 minute wait time in vagrant host(because of low mem)
+        $DAEMON --java-home $JAVA_HOME --catalina-home $CATALINA_HOME --tomcat-user $TOMCAT_USER --service-start-wait-time 60 start
+        RETVAL=$?
+        if [ $RETVAL -eq 0 ]; then
+                echo success
+                touch $LOCKFILE
+        else
+                echo failure
+        fi
+        echo
+        return $RETVAL
+}
+
+stop() {
+        echo -n "Shutting down tomcat: "
+        $DAEMON --java-home $JAVA_HOME --catalina-home $CATALINA_HOME stop
+        RETVAL=$?
+        if [ $RETVAL -eq 0 ]; then
+                echo success
+                rm -f $LOCKFILE
+        else
+                echo failure
+        fi
+        echo
+        return $RETVAL
+}
+
+version() {
+        $DAEMON --java-home $JAVA_HOME --catalina-home $CATALINA_HOME version
+        RETVAL=$?
+        return $RETVAL
+}
+
+case "$1" in
+  start)
+        start
+        ;;
+  stop)
+        stop
+        ;;
+  restart)
+        stop
+        start
+        ;;
+  version)
+        version
+        ;;
+  *)
+        echo $"Usage: $0 {start|stop|restart|version}"
+        exit 3
+esac
+
+exit $?

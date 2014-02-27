@@ -18,6 +18,12 @@
     "zsh": {
       "locked_version": "1.0.0"
     },
+    "vim": {
+      "locked_version": "1.1.2"
+    },
+    "iptables": {
+      "locked_version": "0.12.0"
+    },
     "java": {
       "locked_version": "1.19.2"
     },
