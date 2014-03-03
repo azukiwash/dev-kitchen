@@ -12,10 +12,7 @@ data_ids.each do |id|
   home       = "/home/#{username}"
 
   script 'install conscript sbt' do
-    # not_if do
-    #   "which cs"
-    #   "which sbt"
-    # end
+    not_if %![ -e #{home}/bin/cs ] && [ -e #{home}/bin/sbt ]!
     interpreter "bash"
     user username
     group groupname
@@ -32,6 +29,7 @@ data_ids.each do |id|
   end
 
   script 'install giter8' do
+    not_if %![ -e #{home}/bin/g8 ]!
     interpreter "bash"
     user username
     group groupname

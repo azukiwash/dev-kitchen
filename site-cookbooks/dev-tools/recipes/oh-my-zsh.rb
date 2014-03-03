@@ -11,7 +11,9 @@ data_ids.each do |id|
   username  = u['id']
   groupname = u['main_group']
   home      = "/home/#{username}"
+  zshrc     = "#{home}/.zshrc"
   oh_my_zsh = "#{home}/.oh-my-zsh"
+  autojump  = "#{home}/.autojump"
 
   git oh_my_zsh do
     user  username
@@ -21,17 +23,17 @@ data_ids.each do |id|
     action :sync
   end
 
-  template "#{home}/.zshrc" do
+  template zshrc do
     source 'zshrc.erb'
     owner username
     mode '644'
   end
-  template "#{home}/.oh-my-zsh/custom/custom_aliases.zsh" do
+  template "#{oh_my_zsh}/custom/custom_aliases.zsh" do
     source 'custom_aliases.zsh.erb'
     owner username
     mode '644'
   end
-  template "#{home}/.oh-my-zsh/custom/custom_history.zsh" do
+  template "#{oh_my_zsh}/custom/custom_history.zsh" do
     source 'custom_history.zsh.erb'
     owner username
     mode '644'
@@ -45,17 +47,19 @@ data_ids.each do |id|
     action :sync
   end
   script 'install autojump' do
+    not_if %![ -e #{autojump} ] && [ -n "`cat #{zshrc} | egrep 'autojump.*source.*autojump'`" ]!
     user  username
     group groupname
     cwd   "/tmp"
     interpreter "bash"
     flags '-ex'
     code <<-EOH
+      HOME=#{home}
       cd /tmp/autojump
-      ./install.py --destdir #{home}/.autojump
+      ./install.py --destdir #{autojump}
 
-      echo "[[ -s #{home}/.autojump/etc/profile.d/autojump.sh ]] && source #{home}/.autojump/etc/profile.d/autojump.sh" >> #{home}/.zshrc
-      echo "autoload -U compinit && compinit -u" >> #{home}/.zshrc
+      echo "[[ -s #{autojump}/etc/profile.d/autojump.sh ]] && source #{autojump}/etc/profile.d/autojump.sh" >> #{zshrc}
+      echo "autoload -U compinit && compinit -u" >> #{zshrc}
     EOH
   end
 end

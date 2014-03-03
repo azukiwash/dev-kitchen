@@ -12,6 +12,21 @@ data_ids.each do |id|
   home      = "/home/#{username}"
   rbenv     = "#{home}/.rbenv"
   version   = node.default.ruby.version
+  prefix    = "p0"
+  rbenvsh   = "#{home}/rbenv.sh"
+  zshrc     = "#{home}/.zshrc"
+
+  script "mkdir plugins" do
+    not_if "[ -e #{rbenv}/plugins ]"
+    user  username
+    group groupname
+    cwd   home
+    interpreter "zsh"
+    flags '-ex'
+    code <<-EOH
+      mkdir -p #{rbenv}/plugins
+    EOH
+  end
 
   git "#{rbenv}/plugins/ruby-build" do
     user  username
@@ -22,21 +37,28 @@ data_ids.each do |id|
   end
 
   script "install ruby#{version}" do
-    not_if %!test "`ruby -v | cut -c 1-10`" = 'ruby #{version}'!
     user  username
     group groupname
     cwd   home
-    interpreter "bash"
+    interpreter "zsh"
     flags '-ex'
     code <<-EOH
-      echo 'export RBENV_ROOT=#{home}/.rbenv'      > #{home}/rbenv.sh
-      echo 'export PATH="$RBENV_ROOT/bin:$PATH"'  >> #{home}/rbenv.sh
-      echo 'eval "$(rbenv init -)"'               >> #{home}/rbenv.sh
+      echo 'export RBENV_ROOT=#{home}/.rbenv'      > #{rbenvsh}
+      echo 'export PATH="$RBENV_ROOT/bin:$PATH"'  >> #{rbenvsh}
+      echo 'eval "$(rbenv init -)"'               >> #{rbenvsh}
 
-      source #{home}/rbenv.sh; rbenv install #{version}
-      source #{home}/rbenv.sh; rbenv global  #{version}
+      source #{rbenvsh}
 
-      rm #{home}/rbenv.sh
+      if [ "`ruby -v | cut -d' ' -f2`" != "#{version}#{prefix}" ] ; then
+        rbenv install #{version}
+        rbenv global  #{version}
+      fi
+
+      if [ "`gem list | awk '/bundler/{print $1}'`" != "bundler" ] ; then
+        gem install bundler
+      fi
+
+      rm #{rbenvsh}
     EOH
   end
 end

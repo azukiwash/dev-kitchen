@@ -63,6 +63,7 @@ template "#{tomcatTarget}/tomcat/conf/server.xml" do
 end
 
 script 'make and install jsvc' do
+  creates "#{tomcatHome}/bin/jsvc"
   interpreter "bash"
   user "root"
   group "root"
@@ -78,7 +79,6 @@ script 'make and install jsvc' do
     cd ../..
     rm -rf commons-daemon-#{node['tomcat7']['jsvcversion']}-native-src
   EOH
-  creates "#{tomcatHome}/bin/jsvc"
 end
 
 template "/etc/init.d/tomcat" do

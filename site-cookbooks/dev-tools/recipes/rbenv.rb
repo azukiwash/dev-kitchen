@@ -11,6 +11,7 @@ data_ids.each do |id|
   groupname = u['main_group']
   home      = "/home/#{username}"
   rbenv     = "#{home}/.rbenv"
+  zshrc     = "#{home}/.zshrc"
 
   git rbenv do
     user  username
@@ -21,16 +22,15 @@ data_ids.each do |id|
   end
 
   script 'install rbenv' do
-    not_if "which rbenv"
+    not_if %![ -n "`cat #{zshrc} | egrep 'rbenv init'`" ]!
     user  username
     group groupname
     cwd   home
-    interpreter "bash"
+    interpreter "zsh"
     flags '-ex'
     code <<-EOH
-      echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> #{home}/.zshrc
-      echo 'eval "$(rbenv init -)"' >> #{home}/.zshrc
-      mkdir -p #{home}/.rbenv/plugins
+      echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> #{zshrc}
+      echo 'eval "$(rbenv init -)"' >> #{zshrc}
     EOH
   end
 end
