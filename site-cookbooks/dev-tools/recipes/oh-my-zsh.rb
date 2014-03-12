@@ -24,6 +24,7 @@ data_ids.each do |id|
   end
 
   template zshrc do
+    not_if %![ -n "`head -1 #{zshrc} | egrep 'Path to your oh-my-zsh configuration`" ]!
     source 'zshrc.erb'
     owner username
     mode '644'

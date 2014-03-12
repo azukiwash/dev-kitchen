@@ -43,7 +43,7 @@ data_ids.each do |id|
     interpreter "zsh"
     flags '-ex'
     code <<-EOH
-      echo 'export RBENV_ROOT=#{home}/.rbenv'      > #{rbenvsh}
+      echo 'export RBENV_ROOT="#{home}/.rbenv"'    > #{rbenvsh}
       echo 'export PATH="$RBENV_ROOT/bin:$PATH"'  >> #{rbenvsh}
       echo 'eval "$(rbenv init -)"'               >> #{rbenvsh}
 

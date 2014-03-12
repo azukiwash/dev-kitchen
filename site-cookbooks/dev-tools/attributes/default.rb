@@ -1,3 +1,5 @@
 default[:oh_my_zsh][:theme]  = "ys"
 default[:oh_my_zsh][:plugins]  = "autojump git brew yum gradle"
 default[:ruby][:version]  = "2.1.0"
+default[:python][:versiontwo]  = "2.7.6"
+default[:python][:versionthree]  = "3.3.5"
