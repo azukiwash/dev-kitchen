@@ -65,6 +65,14 @@ applist = %w[
     gimp
     vagrant
     virtualbox
+    caffeine
+    google-japanese-ime
+    java
+    kobito
+    skitch
+    sourcetree
+    the-unarchiver
+    onepassword
 ]
 applist.each do |app|
   script "install app[#{app}]" do
@@ -124,6 +132,7 @@ include_recipe "dev-tools-osx::oh-my-zsh"
   'export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"',
   'export MANPATH="/usr/local/opt/gnu-sed/libexec/gnuman:$MANPATH"',
   'export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"',
+  'export PATH="$PATH:/Applications/MacVim.app/Contents/MacOS"',
   'export LANG="ja_JP.UTF-8"',
   'export LC_ALL="ja_JP.UTF-8"',
   'alias find=gfind',
