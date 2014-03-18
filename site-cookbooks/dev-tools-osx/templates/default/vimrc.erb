@@ -1,0 +1,28 @@
+execute pathogen#infect()
+
+syntax enable
+if has('gui_running')
+    set background=light
+else
+    set background=dark
+endif
+colorscheme solarized
+
+set tabstop=2        " タブサイズ
+set et               " タブのかわりにスペース
+set sts=2            " ソフトタブサイズ
+"set si               " スマートインデント
+set showmatch        " 閉じ括弧が入力されたとき、対応する括弧を表示
+set ruler            " ルーラー（右下に表示される行・列の番号）を表示する
+set nobackup         " バックアップなし
+set visualbell t_vb= " ビープ音なし
+set autoread         " 外部のエディタで編集中のファイルが変更されたら、自動的に読み直す
+set history=256      " コロンコマンドを記録する数
+set hidden           " 変更中のファイルでも、保存しないで他のファイルを表示することが出来る
+
+" search
+set smartcase        " 検索で小文字なら大文字を無視、大文字なら無視しない設定
+set wrapscan         " 検索をファイルの末尾まで検索したら、ファイルの先頭へループする
+set hlsearch         " 検索結果をハイライトする
+
+set statusline=%<%f\ %m\ %r%h%w%{'['.(&fenc!=''?&fenc:&enc).(&bomb?':BOM':'').']['.&ff.']'}%=\ (%v,%l)/%L%8P
