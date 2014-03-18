@@ -82,17 +82,17 @@ data_ids.each do |id|
 
       source #{pyenvsh}
 
-      if [ -z "`pyenv versions | egrep #{versiontwo}`" ] ; then
+      if [ -z "`pyenv versions | egrep '^(  |\\* )#{versiontwo}( |$)'`" ]; then
         pyenv install #{versiontwo}
         pyenv global  #{versiontwo}
         curl -kL https://raw.github.com/pypa/pip/master/contrib/get-pip.py | pyenv exec python
       fi
 
-      if [ -z "`pyenv versions | egrep #{versionthree}`" ] ; then
+      if [ -z "`pyenv versions | egrep '^(  |\\* )#{versionthree}( |$)'`" ]; then
         pyenv install #{versionthree}
       fi
 
-      if [ -z "`pyenv version | egrep #{versionthree}`" ] ; then
+      if [ -z "`pyenv version | egrep '^#{versionthree}$'`" ] ; then
         pyenv global  #{versionthree}
       fi
 

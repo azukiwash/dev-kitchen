@@ -49,12 +49,14 @@ data_ids.each do |id|
 
       source #{rbenvsh}
 
-      if [ "`ruby -v | cut -d' ' -f2`" != "#{version}#{prefix}" ] ; then
+      if [ -z "`rbenv versions | egrep '^(  |\\* )#{version}( |$)'`" ]; then
         rbenv install #{version}
         rbenv global  #{version}
       fi
 
-      if [ "`gem list | awk '/bundler/{print $1}'`" != "bundler" ] ; then
+      rbenv rehash
+
+      if [ -z "`gem list | cut -d' ' -f1 | awk '/^bundler$/{print $0}'`" ]; then
         gem install bundler
       fi
 

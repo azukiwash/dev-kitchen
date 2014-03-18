@@ -24,11 +24,12 @@ data_ids.each do |id|
   end
 
   template zshrc do
-    not_if %![ -n "`head -1 #{zshrc} | egrep 'Path to your oh-my-zsh configuration`" ]!
+    not_if %![ -n "`head -1 #{zshrc} | egrep 'Path to your oh-my-zsh configuration'`" ]!
     source 'zshrc.erb'
     owner username
     mode '644'
   end
+
   template "#{oh_my_zsh}/custom/custom_aliases.zsh" do
     source 'custom_aliases.zsh.erb'
     owner username
