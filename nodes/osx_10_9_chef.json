@@ -1,0 +1,16 @@
+{
+  "dev-tools-osx": {
+    "os": {
+      "user": "vmware"
+    }
+  },
+  "run_list": [
+    "homebrew",
+    "dmg",
+    "dev-tools-osx::oh-my-zsh",
+    "dev-tools-osx",
+    "dev-tools-osx::ruby",
+    "dev-tools-osx::python",
+    "dev-tools::the_silver_searcher"
+  ]
+}
