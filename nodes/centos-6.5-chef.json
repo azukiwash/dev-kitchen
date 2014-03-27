@@ -3,6 +3,11 @@
     "install_flavor": "openjdk",
     "jdk_version": 7
   },
+  "dev-tools": {
+    "nginx": {
+      "server_name": "localhost.localdomain"
+    }
+  },
   "run_list":[
     "yum-epel",
     "git",
