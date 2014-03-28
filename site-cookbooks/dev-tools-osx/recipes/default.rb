@@ -11,7 +11,7 @@
 # * xcode-select --install
 # * open XCode and agree to the Xcode/iOS license
 # * change system configuration to arrow login(ssh) from remotehosts
-# * echo "`whoami`        ALL=(ALL)       NOPASSWD: ALL" | sudo tee -a /etc/sudoers
+# * echo "$(whoami)        ALL=(ALL)       NOPASSWD: ALL" | sudo tee -a /etc/sudoers
 include_recipe "homebrew"
 include_recipe "dmg"
 
@@ -75,7 +75,7 @@ applist = %w[
     onepassword
 ]
 applist.each do |app|
-  script "install app[#{app}]" do
+  script "cask install #{app}" do
     not_if %!brew cask list #{app}!
     interpreter "bash"
     flags '-ex'
@@ -96,7 +96,7 @@ end
 
 # modify files in /etc
 bash '/etc/paths' do
-  not_if %![ `head -1 /etc/paths` = '/usr/local/bin' ]!
+  not_if %![ $(head -1 /etc/paths) = '/usr/local/bin' ]!
   flags '-ex'
   code <<-EOH
     cat /etc/paths | sed '$d' | gsed '1i \\/usr\\/local\\/bin' > /etc/paths.new
@@ -116,8 +116,8 @@ homepath = "/Users/#{target}"
 zshrc = "#{homepath}/.zshrc"
 
 bash 'chsh to /usr/local/bin/zsh' do
-#  not_if %![ "`echo $SHELL`" = '/usr/local/bin/zsh' ]!
-  not_if %![ "`dscl . read /Users/#{target} UserShell | cut -d' ' -f2`" = '/usr/local/bin/zsh' ]!
+#  not_if %![ "$(echo $SHELL)" = '/usr/local/bin/zsh' ]!
+  not_if %![ "$(dscl . read /Users/#{target} UserShell | cut -d' ' -f2)" = '/usr/local/bin/zsh' ]!
   flags '-ex'
   code <<-EOH
     chsh -s /usr/local/bin/zsh #{target}
@@ -132,6 +132,8 @@ include_recipe "dev-tools-osx::oh-my-zsh"
   'export PATH="/usr/local/opt/coreutils/libexec/gnubin:$PATH"',
   'export MANPATH="/usr/local/opt/gnu-sed/libexec/gnuman:$MANPATH"',
   'export MANPATH="/usr/local/opt/coreutils/libexec/gnuman:$MANPATH"',
+  'export JAVA_HOME=$(/usr/libexec/java_home)',
+  'export PATH="$JAVA_HOME/bin:$PATH"',
   'export PATH="$PATH:/Applications/MacVim.app/Contents/MacOS"',
   'export LANG="ja_JP.UTF-8"',
   'export LC_ALL="ja_JP.UTF-8"',

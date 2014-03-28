@@ -11,6 +11,8 @@
     "dev-tools-osx",
     "dev-tools-osx::ruby",
     "dev-tools-osx::python",
-    "dev-tools::the_silver_searcher"
+    "dev-tools::the_silver_searcher",
+    "dev-tools-osx::gradle",
+    "dev-tools-osx::sbt"
   ]
 }
