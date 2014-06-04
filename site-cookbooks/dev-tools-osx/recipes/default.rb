@@ -51,7 +51,7 @@ include_recipe "dmg"
 end
 
 # install cask(package manager for mac gui applications)
-homebrew_tap 'phinze/homebrew-cask'
+homebrew_tap 'caskroom/cask'
 package 'brew-cask' do
   action :install
 end
