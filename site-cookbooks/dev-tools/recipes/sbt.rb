@@ -20,7 +20,7 @@ data_ids.each do |id|
     flags '-ex'
     code <<-EOH
       HOME=#{home}
-      curl https://raw.github.com/n8han/conscript/master/setup.sh | sh
+      curl https://raw.githubusercontent.com/n8han/conscript/master/setup.sh | sh
 
       echo 'SBT_OPTS="-Xms128M -Xmx128M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=64M"' > #{home}/bin/sbt
       echo 'java $SBT_OPTS -jar #{home}/.conscript/sbt-launch.jar "$@"' >> #{home}/bin/sbt
