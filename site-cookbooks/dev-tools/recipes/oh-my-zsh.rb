@@ -14,6 +14,7 @@ data_ids.each do |id|
   zshrc     = "#{home}/.zshrc"
   oh_my_zsh = "#{home}/.oh-my-zsh"
   autojump  = "#{home}/.autojump"
+  vimrc     = "#{home}/.vimrc"
 
   git oh_my_zsh do
     user  username
@@ -37,6 +38,12 @@ data_ids.each do |id|
   end
   template "#{oh_my_zsh}/custom/custom_history.zsh" do
     source 'custom_history.zsh.erb'
+    owner username
+    mode '644'
+  end
+
+  template vimrc do
+    source 'vimrc.erb'
     owner username
     mode '644'
   end
