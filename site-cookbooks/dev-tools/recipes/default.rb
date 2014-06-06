@@ -16,6 +16,7 @@ include_recipe "zsh"
     tree
     unzip
     curl
+    tmux
 ].each do |pkg|
   package pkg do
     action :upgrade

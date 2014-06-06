@@ -15,6 +15,7 @@ data_ids.each do |id|
   oh_my_zsh = "#{home}/.oh-my-zsh"
   autojump  = "#{home}/.autojump"
   vimrc     = "#{home}/.vimrc"
+  tmux      = "#{home}/.tmux.conf"
 
   git oh_my_zsh do
     user  username
@@ -44,6 +45,12 @@ data_ids.each do |id|
 
   template vimrc do
     source 'vimrc.erb'
+    owner username
+    mode '644'
+  end
+
+  template tmux do
+    source 'tmux.conf.erb'
     owner username
     mode '644'
   end
