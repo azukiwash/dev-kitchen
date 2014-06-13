@@ -24,6 +24,7 @@ set hidden           " 変更中のファイルでも、保存しないで他の
 set smartcase        " 検索で小文字なら大文字を無視、大文字なら無視しない設定
 set wrapscan         " 検索をファイルの末尾まで検索したら、ファイルの先頭へループする
 set hlsearch         " 検索結果をハイライトする
+set is               " インクリメンタルサーチ
 
 set statusline=%<%f\ %m\ %r%h%w%{'['.(&fenc!=''?&fenc:&enc).(&bomb?':BOM':'').']['.&ff.']'}%=\ (%v,%l)/%L%8P
 
