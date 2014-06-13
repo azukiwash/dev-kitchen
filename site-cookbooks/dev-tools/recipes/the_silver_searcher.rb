@@ -3,7 +3,7 @@
 # Recipe:: the_silver_searcher
 #
 case node[:platform]
-when "centos"
+when "redhat", "centos", "fedora"
   %w[
       gcc
       automake

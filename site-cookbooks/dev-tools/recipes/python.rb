@@ -5,7 +5,7 @@
 include_recipe "dev-tools::pyenv"
 
 case node[:platform]
-when "centos"
+when "redhat", "centos", "fedora"
   %w[
     zlib-devel
     bzip2

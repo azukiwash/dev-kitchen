@@ -11,7 +11,6 @@ include_recipe "zsh"
     nmap
     colordiff
     ngrep
-    screen
     vim
     tree
     unzip
@@ -25,7 +24,7 @@ end
 
 # for build rbenv
 case node[:platform]
-when "centos"
+when "redhat", "centos", "fedora"
   %w[
     gcc-c++
     glibc-headers
@@ -60,7 +59,7 @@ end
 
 # for build pyenv
 case node[:platform]
-when "centos"
+when "redhat", "centos", "fedora"
   %w[
     zlib-devel
     bzip2
@@ -94,7 +93,7 @@ end
 
 package "netcat" do
   case node[:platform]
-  when "centos"
+  when "redhat", "centos", "fedora"
     package_name "nc"
   when "ubuntu"
     package_name "netcat"
