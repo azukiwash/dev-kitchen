@@ -4,7 +4,7 @@
 #
 
 case node[:platform]
-when "redhat", "centos", "fedora"
+when "redhat", "centos", "amazon"
   template "/etc/sysconfig/iptables" do
     source "iptables.erb"
     owner "root"

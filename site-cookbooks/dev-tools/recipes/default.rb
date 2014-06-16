@@ -24,7 +24,7 @@ end
 
 # for build rbenv
 case node[:platform]
-when "redhat", "centos", "fedora"
+when "redhat", "centos", "amazon"
   %w[
     gcc-c++
     glibc-headers
@@ -59,7 +59,7 @@ end
 
 # for build pyenv
 case node[:platform]
-when "redhat", "centos", "fedora"
+when "redhat", "centos", "amazon"
   %w[
     zlib-devel
     bzip2
@@ -93,7 +93,7 @@ end
 
 package "netcat" do
   case node[:platform]
-  when "redhat", "centos", "fedora"
+  when "redhat", "centos", "amazon"
     package_name "nc"
   when "ubuntu"
     package_name "netcat"
