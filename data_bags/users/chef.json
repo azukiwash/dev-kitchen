@@ -1,9 +1,6 @@
 {
   "id": "chef",
   "comment": "chef user",
-  "password": "$1$SSyLL545$hGPZ5uWxqeg364/L4tOgT0",
-  "uid": 888,
   "main_group": "chef",
-  "main_gid": 888,
   "shell": "\/bin\/zsh"
 }

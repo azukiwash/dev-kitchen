@@ -24,6 +24,14 @@
     "iptables": {
       "locked_version": "0.12.0"
     },
+    "yum-epel": {
+      "locked_version": "0.3.4"
+    },
+    "yum-repoforge": {
+      "locked_version": "0.3.1",
+      "git": "https://github.com/opscode-cookbooks/yum-repoforge.git",
+      "ref": "edb447000ce2ba65bee2e35fa6bfb9db09b2bc20"
+    },
     "java": {
       "locked_version": "1.19.2"
     },
@@ -38,9 +46,6 @@
     },
     "runit": {
       "locked_version": "1.5.8"
-    },
-    "yum-epel": {
-      "locked_version": "0.3.4"
     }
   }
 }

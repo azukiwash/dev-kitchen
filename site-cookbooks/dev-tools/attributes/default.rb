@@ -1,7 +1,7 @@
 default[:oh_my_zsh][:theme]  = "ys"
 default[:oh_my_zsh][:plugins]  = "autojump git brew yum gradle"
 default[:ruby][:version]  = "2.1.2"
-default[:python][:versiontwo]  = "2.7.6"
+default[:python][:versiontwo]  = "2.7.8"
 default[:python][:versionthree]  = "3.4.1"
 default[:nginx][:server_name]  = "localhost"
 default[:dev_tools][:ssh_port]  = "22"

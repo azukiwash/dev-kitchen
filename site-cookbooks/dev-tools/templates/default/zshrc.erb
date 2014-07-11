@@ -69,3 +69,4 @@ export PATH=$HOME/bin:/usr/local/bin:$PATH
 # ssh
 # export SSH_KEY_PATH="~/.ssh/dsa_id"
 
+type cowsay >/dev/null 2>&1 && type fortune >/dev/null 2>&1 && [[ -d $HOME/cows ]] && ruby -e 'puts `cowsay -f '$HOME/cows/'#{Dir.entries("'$HOME/cows/'").select{|e|e=~/.*cow/}.sample} \`fortune -s\``'

@@ -19,8 +19,9 @@
 -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
 
 # 利用するサービスの接続許可
-# http
+# http(s)
 -A INPUT -m state --state NEW -m tcp -p tcp --dport 80 -j ACCEPT
+-A INPUT -m state --state NEW -m tcp -p tcp --dport 443 -j ACCEPT
 # ssh
 -A INPUT -m state --state NEW -m tcp -p tcp --dport <%= node.default.dev_tools.ssh_port %> -j ACCEPT
 

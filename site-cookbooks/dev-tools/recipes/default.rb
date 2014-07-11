@@ -8,6 +8,10 @@ include_recipe "zsh"
 %w[
     dstat
     sl
+    figlet
+    boxes
+    cowsay
+    fortune
     nmap
     colordiff
     ngrep
@@ -101,21 +105,28 @@ package "netcat" do
   action :install
 end
 
+chef_gem 'unix-crypt'
+
+require 'unix_crypt'
+SALT_CHARSET = "./0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+
 data_ids = data_bag('users')
-data_ids.each do |id|
+data_ids.each_with_index do |id,idx|
+  salt = (0..7).inject(""){|s,i| s << SALT_CHARSET[rand 64]}
   u = data_bag_item('users', id)
   user u['id'] do
     comment  u['comment']
-    uid      u['uid']
+    uid      800+idx
     shell    u['shell']
     home     "/home/#{u['id']}"
     supports :manage_home => true
+    password UnixCrypt::SHA512.build("#{u['id']}zzz",salt)
     password u['password']
     action   [:create]
   end
   group u['main_group'] do
     action :modify
-    gid     u['main_gid']
+    gid     800+idx
     members u['id']
     append true
   end
