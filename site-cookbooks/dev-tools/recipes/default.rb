@@ -130,4 +130,20 @@ data_ids.each_with_index do |id,idx|
     members u['id']
     append true
   end
+  # files/default/cows.zip
+  cookbook_file "/home/#{u['id']}/cows.zip" do
+    source "cows.zip"
+    mode "0644"
+  end
+  script 'unzip cows' do
+    user  u['id']
+    group u['id']
+    cwd   "/home/#{u['id']}"
+    interpreter "bash"
+    flags '-ex'
+    code <<-EOH
+      HOME=/home/#{u['id']}
+      unzip -o /home/#{u['id']}/cows.zip
+    EOH
+  end
 end
