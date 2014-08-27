@@ -1,6 +1,0 @@
-{
-  "id": "chef",
-  "comment": "chef user",
-  "main_group": "chef",
-  "shell": "\/bin\/zsh"
-}

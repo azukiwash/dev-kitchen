@@ -35,6 +35,11 @@
     "java": {
       "locked_version": "1.19.2"
     },
+    "nodebrew": {
+      "locked_version": "0.2.0",
+      "git": "https://github.com/linyows/nodebrew-cookbook.git",
+      "ref": "f5230e68686af0cd0893e6b53fb806c83b7930a4"
+    },
     "build-essential": {
       "locked_version": "1.4.2"
     },
